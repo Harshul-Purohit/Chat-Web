@@ -1,0 +1,14 @@
+body{
+ margin: 0;
+  font-family: Arial, sans-serif;
+  background-image: url(../public/background.jpg);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
