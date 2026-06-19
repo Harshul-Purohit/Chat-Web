@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link , useNavigate} from "react-router-dom";
 import "../Form.css";
+import axios from "axios"
+import toast from "react-hot-toast";
 
 const Signup = () => {
   const [user, setUser] = useState({
@@ -11,6 +13,8 @@ const Signup = () => {
     gender: ""
   });
 
+  const navigate = useNavigate();
+
   const [error, setError] = useState(""); // new error state
 
   const handleCheckBox = (gender) => {
@@ -18,38 +22,60 @@ const Signup = () => {
     console.log("Selected gender:", gender);
   };
 
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
+const onSubmitHandler = async (e) => {
+  e.preventDefault();
 
-    // validation checks
-    if (!user.fullName || !user.userName || !user.password || !user.confirmPassword) {
-      setError("All fields are required.");
-      return;
+  // validation checks first
+  if (!user.fullName || !user.userName || !user.password || !user.confirmPassword) {
+    setError("All fields are required.");
+    return;
+  }
+
+  if (user.password !== user.confirmPassword) {
+    setError("Passwords do not match.");
+    return;
+  }
+
+  if (!user.gender) {
+    setError("Please select a gender.");
+    return;
+  }
+
+  setError(""); // clear error
+
+  try {
+    const res = await axios.post(
+      "http://localhost:2023/api/v1/user/register",
+      user,
+      {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      }
+    );
+
+    console.log(res);
+
+    if (res.data.success) {
+      navigate("/login"); // ✅ redirect only after success
+      toast.success(res.data.message);
+    } else {
+      setError(res.data.message || "Signup failed.");
     }
+  } catch (error) {
+    console.error(error);
+    setError("Server error. Please try again.");
+  }
 
-    if (user.password !== user.confirmPassword) {
-      setError("Passwords do not match.");
-      return;
-    }
+  // optional: reset form only after success
+  setUser({
+    fullName: "",
+    userName: "",
+    password: "",
+    confirmPassword: "",
+    gender: "",
+  });
+};
 
-    if (!user.gender) {
-      setError("Please select a gender.");
-      return;
-    }
-
-    // if everything is valid
-    setError(""); // clear error
-    console.log("User data:", user);
-
-    // reset form
-    setUser({
-      fullName: "",
-      userName: "",
-      password: "",
-      confirmPassword: "",
-      gender: ""
-    });
-  };
 
   return (
     <div className="form-container">

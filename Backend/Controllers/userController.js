@@ -30,7 +30,11 @@ export const register = async(req,res)=>{
       gender
     });
 
-    res.status(201).json({message:"User registered successfully"});
+      return res.status(201).json({
+      success: true,
+      message: "User registered successfully",
+   
+    });
   } catch (error) {
     res.status(500).json({message:"Server error", error:error.message});
   }
