@@ -31,7 +31,7 @@ const onSubmitHandler = async (e) => {
     return;
   }
 
-  if (user.password !== user.confirmPassword) {
+  if (user.password !== user.confirmPassword) {                     
     setError("Passwords do not match.");
     return;
   }
@@ -62,6 +62,7 @@ const onSubmitHandler = async (e) => {
       setError(res.data.message || "Signup failed.");
     }
   } catch (error) {
+        toast.error(error.response.data.message);
     console.error(error);
     setError("Server error. Please try again.");
   }
