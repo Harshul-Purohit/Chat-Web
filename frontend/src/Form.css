@@ -38,7 +38,7 @@
 }
 
 .btn:hover {
-  background: #8B6B4F;
+  background: #5C4033;
 }
 
 
@@ -54,3 +54,216 @@
   font-weight: 600;
   color: #5C4033;
 }
+
+
+
+/* homepage */
+
+.home-box {
+  display: flex;
+  height: 80vh;
+  background: rgba(255, 255, 255, 0.85); /* brown gradient */
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  overflow: visible;
+}
+
+/* Sidebar (left) */
+.home-box > :first-child {
+  flex: 0 0 250px;            /* fixed width */
+  background: rgba(255,255,255,0.85); /* semi-transparent white overlay */
+  border-right: 1px solid #ddd;
+  padding: 1rem;
+}
+
+/* Message container (right) */
+.home-box > :last-child {
+  flex: 0 0 500px;                    /* take remaining space */
+  padding: 1rem;
+  background: rgba(255,255,255,0.85); /* same semi-transparent white */
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .home-box {
+    flex-direction: column;   /* stack vertically */
+  }
+
+  .home-box > :first-child {
+    flex: none;
+    width: 100%;              /* sidebar full width */
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .home-box > :last-child {
+    flex: none;
+    width: 100%;              /* message area full width */
+  }
+}
+
+
+/* Sidebar */
+.home-sidebar {
+  flex: 0 0 260px; /* fixed width */
+  background: linear-gradient(180deg, #5C4033, #A67B5B); /* warm gradient */
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border-right: 2px solid #5C4033;
+  height: 100%;           /* fill parent height */
+  box-sizing: border-box;
+  color: #fff;
+}
+
+/* Search form */
+.home-sidebar form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 8px 12px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.home-sidebar input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 1rem;
+  color: #fff;
+  padding: 6px;
+}
+
+.home-sidebar input::placeholder {
+  color: #ddd;
+  font-style: italic;
+}
+
+.home-sidebar button {
+  background: #5C4033;
+  border: none;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-sidebar button:hover {
+  background: #A67B5B;
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+/* Divider */
+.divider {
+  border-top: 1px solid rgba(255,255,255,0.4);
+  margin: 1rem 0;
+}
+
+/* Other users list */
+.other-users {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+
+  scrollbar-width: none;      /* Firefox */
+  -ms-overflow-style: none; 
+}
+
+.other-users::-webkit-scrollbar {
+  display: none;              /* Chrome, Safari, newer Edge */
+}
+
+/* Logout button */
+.logout-btn {
+  background-color: #5C4033;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.3s;
+  margin-top: auto; /* stays pinned at bottom */
+}
+
+.logout-btn:hover {
+  background-color: #A67B5B;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .home-sidebar {
+    flex: none;
+    width: 100%;
+    border-right: none;
+    border-bottom: 2px solid #5C4033;
+    height: auto;
+  }
+}
+
+
+
+/* Wrapper */
+.other-users-box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* User card */
+.user-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.15); /* subtle overlay */
+  transition: background 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+
+/* Hover effect */
+.user-card:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+/* Avatar */
+.avatar img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #A67B5B; /* accent border */
+}
+
+/* User info */
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #fff;
+}
+
+/* Divider line */
+.divider {
+  border-top: 1px solid rgba(255,255,255,0.3);
+  margin: 8px 0;
+}
+
+
+
+
