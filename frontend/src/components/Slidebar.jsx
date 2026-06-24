@@ -1,8 +1,31 @@
 import React from 'react'
 import OthersUsers from './OthersUsers'
 import {BiSearchAlt2} from "react-icons/bi"
+import "../Form.css";
+ import axios from 'axios';
+ import toast from 'react-hot-toast'
+ import {useNavigate} from 'react-router-dom'
 
 const Slidebar = () => {
+
+  const navigate = useNavigate();
+const logoutHandler = async () => {
+  try {
+    const res = await axios.post("http://localhost:2023/api/v1/user/logout", {}, {
+      withCredentials: true
+    });
+
+    toast.success(res.data.message || "Logged out successfully");
+    navigate("/login");
+  } catch (error) {
+    console.error("Logout error:", error);
+    toast.error("Failed to logout");
+  }
+};
+
+
+
+
   return (
 
 <div className="home-layout">
@@ -24,7 +47,7 @@ const Slidebar = () => {
   
     </div>
 
-    <button className="logout-btn">Logout</button>
+    <button className="logout-btn"  onClick={logoutHandler} >Logout</button>
 
   </div>
 

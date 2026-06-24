@@ -1,17 +1,18 @@
 import React from 'react'
 
-const OtherUser = () => {
+const OtherUser = (props) => {
+  const user = props.user;
   return (
    <div className="other-users-box">
       <div className="user-card">
         <div className="avatar">
           <img
-            src="https://wallpapers.com/images/featured/cool-profile-picture-87h46gcobjl5e4xu.jpg"
+            src={user?.profilePhoto}
             alt="User Avatar"
           />
         </div>
         <div className="user-info">
-          <p className="user-name">Harshul</p>
+          <p className="user-name">{user?.fullName}</p>
         </div>
       </div>
 

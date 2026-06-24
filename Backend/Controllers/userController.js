@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import { User } from "../Models/userModel.js";
 import jwt from "jsonwebtoken";
@@ -68,10 +69,11 @@ export const login = async (req, res) => {
     // Send response with cookie
     return res.status(200)
       .cookie("token", token, {
-        maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
-        httpOnly: true,
-        sameSite: 'strict'
-      })
+  maxAge: 24 * 60 * 60 * 1000, // 1 day
+  httpOnly: true,
+  sameSite: "lax",   // ✅ allows cross-port cookies
+  secure: false      // keep false for localhost (true only with HTTPS)
+})
       .json({
         _id: user._id,
         userName: user.userName,
@@ -112,12 +114,17 @@ export const logout = (req, res) => {
 
 export const getOtherUser = async (req, res) => {
   try {
-    const loggedInUserId = req.userId; // fixed
+    const loggedInUserId = req.userId;
 
-    const otherUsers = await User.find({ _id: { $ne: loggedInUserId } })
-                                 .select("-password");
+    // Convert to ObjectId for comparison
+    const loggedInObjectId = new mongoose.Types.ObjectId(loggedInUserId);
 
-    return res.status(200).json(otherUsers);
+    const allUsers = await User.find().select("-password");
+
+    const self = allUsers.find(u => u._id.equals(loggedInObjectId));
+    const others = allUsers.filter(u => !u._id.equals(loggedInObjectId));
+
+    return res.status(200).json({ self, others });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Server error" });
@@ -125,6 +132,6 @@ export const getOtherUser = async (req, res) => {
 };
 
 
-
+ 
 
 
