@@ -1,9 +1,20 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { setSelectedUser } from '../Redux/userSlice'
 
-const OtherUser = (props) => {
-  const user = props.user;
+const OtherUser = ({ user }) => {
+  const dispatch = useDispatch();
+  const { selectedUser } = useSelector(store => store.user);
+
+  const SelectUserHandler = () => {
+    dispatch(setSelectedUser(user));
+  };
+
   return (
-   <div className="other-users-box">
+    <div
+      onClick={SelectUserHandler}
+      className={`other-users-box ${selectedUser?._id === user?._id ? 'selected' : ''}`}
+    >
       <div className="user-card">
         <div className="avatar">
           <img
@@ -17,9 +28,8 @@ const OtherUser = (props) => {
       </div>
 
       <div className="divider"></div>
-
     </div>
-  )
-}
+  );
+};
 
-export default OtherUser
+export default OtherUser;
