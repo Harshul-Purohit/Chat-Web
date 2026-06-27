@@ -1,7 +1,16 @@
 import React from 'react'
 import "../Form.css"
+import { useSelector } from 'react-redux'
 
-const SingleMessage = ({ type, text }) => {
+const SingleMessage = ({ type, message }) => {
+  const { selectedUser, authUser } = useSelector(store => store.user)
+
+  // Format timestamp nicely
+  const formattedTime = new Date(message.createdAt).toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+
   return (
     <div className={`single-message ${type}`}>
       {/* Chat Start (received) → avatar left */}
@@ -9,12 +18,13 @@ const SingleMessage = ({ type, text }) => {
         <>
           <div className="chat-avatar">
             <img
-              src="https://wallpapers.com/images/featured/cool-profile-picture-87h46gcobjl5e4xu.jpg"
-              alt="User Avatar"
+              src={selectedUser?.profilePhoto}
+              alt={selectedUser?.fullName || "User Avatar"}
             />
           </div>
           <div className="chat-bubble">
-            <p>Hello!</p>
+            <p>{message.message}</p>
+            <span className="chat-time">{formattedTime}</span>
           </div>
         </>
       )}
@@ -23,12 +33,13 @@ const SingleMessage = ({ type, text }) => {
       {type === "end" && (
         <>
           <div className="chat-bubble">
-            <p>{text}</p>
+            <p>{message.message}</p>
+            <span className="chat-time">{formattedTime}</span>
           </div>
           <div className="chat-avatar">
             <img
-              src="https://wallpapers.com/images/featured/cool-profile-picture-87h46gcobjl5e4xu.jpg"
-              alt="User Avatar"
+              src={authUser?.profilePhoto}
+              alt={authUser?.fullName || "User Avatar"}
             />
           </div>
         </>

@@ -1,28 +1,39 @@
 import axios from "axios";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setMessages } from "../Redux/messageSlice";
 
-const UseGetMessages = () => {
+const useGetMessages = () => {
+  
   const { selectedUser } = useSelector(store => store.user);
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log("Fetching messages...");
     const fetchMessages = async () => {
-      if (!selectedUser?._id) return; // guard against null
+      if (!selectedUser?._id) {
+        dispatch(setMessages([]));
+        return;
+      }
       try {
-        axios.defaults.withCredentials = true;
         const res = await axios.get(
           `http://localhost:2023/api/v1/message/${selectedUser._id}`,
           { withCredentials: true }
         );
-        console.log(res.data);
+
+        // ✅ Always overwrite with fresh data
+        dispatch(setMessages(res.data.messages || []));
       } catch (error) {
         console.log("Error fetching messages:", error);
+        dispatch(setMessages([]));
       }
     };
-    fetchMessages();
-  }, [selectedUser]); // refetch whenever selectedUser changes
 
-  return null; // hooks usually don’t render anything
+    fetchMessages();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedUser?._id, dispatch]); 
+  // ✅ Only depend on selectedUser._id and dispatch
+  // We disable the lint warning because including `messages` would cause unnecessary re-fetch loops
 };
 
-export default UseGetMessages;
+export default useGetMessages;

@@ -93,7 +93,7 @@ export const logout = (req, res) => {
     // Clear cookie properly
     res.clearCookie("token", {
       httpOnly: true,
-      sameSite: "strict"
+      sameSite: "lax"
     });
 
     return res.status(200).json({

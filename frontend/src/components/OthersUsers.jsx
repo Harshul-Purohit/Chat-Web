@@ -1,19 +1,21 @@
-import React from 'react'
-import OtherUser from './OtherUser'
-import UseGetOtherUser from '../Hooks/UseGetOtherUser'
-import { useSelector } from 'react-redux'
+import React from 'react';
+import OtherUser from './OtherUser';
+import useGetOtherUser from '../Hooks/useGetOtherUser';
+import { useSelector } from 'react-redux';
 
 const OthersUsers = () => {
-  // ✅ Call the hook properly
-  UseGetOtherUser();
+  // Call the hook properly
+  useGetOtherUser();
 
-  // ✅ Use consistent naming
+  // Use consistent naming
   const othersUsers = useSelector(store => store.user.othersUsers);
 
-  if (!othersUsers) return null;
+  if (!othersUsers) {
+    return <p>Loading users...</p>;
+  }
 
   return (
-    <div>
+    <div className="others-users-list">
       {othersUsers.map(user => (
         <OtherUser key={user._id} user={user} />
       ))}
