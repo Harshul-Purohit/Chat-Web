@@ -4,15 +4,20 @@ const userSlice = createSlice({
   name: "user",
   initialState: {
     authUser: null,
-    othersUsers: null,   // ✅ consistent naming
+    allUsers: [],       // full list from backend
+    othersUsers: [],    // filtered/display list
     selectedUser: null
   },
   reducers: {
     setAuthUser: (state, action) => {
       state.authUser = action.payload;
     },
+    setAllUsers: (state, action) => {
+      state.allUsers = action.payload;
+      state.othersUsers = action.payload; // initialize display list
+    },
     setOthersUsers: (state, action) => {
-      state.othersUsers = action.payload; // ✅ matches initialState
+      state.othersUsers = action.payload;
     },
     setSelectedUser: (state, action) => {
       state.selectedUser = action.payload;
@@ -20,5 +25,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { setAuthUser, setOthersUsers, setSelectedUser } = userSlice.actions;
+export const { setAuthUser, setAllUsers, setOthersUsers, setSelectedUser } = userSlice.actions;
 export default userSlice.reducer;
+

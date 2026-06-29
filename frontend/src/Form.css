@@ -401,16 +401,16 @@
 
 
 .messages-box {
-  flex: 1;                     /* take available space in parent */
+  flex: 1;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;   /* push content to bottom */
+  flex-direction: column; /* oldest at top, newest at bottom */
   padding: 1rem;
-  overflow-y: auto;            /* scroll when content exceeds height */
-  background: #f9f9f9;         /* light background */
-  height: 100%;                /* fill parent height */
+  overflow-y: auto;
+  background: #f9f9f9;
+  height: 100%;
   box-sizing: border-box;
 }
+
 
 
 
